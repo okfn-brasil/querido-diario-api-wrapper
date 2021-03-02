@@ -43,7 +43,7 @@ def gazettes(
 ):
     endpoint = "gazettes/"
     if territory_id is not None:
-        endpoint = f"gazettes/{territory_id}/"
+        endpoint = f"gazettes/{territory_id}"
 
     payload = [
         f"offset={offset}",

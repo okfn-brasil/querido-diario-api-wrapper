@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name="querido_diario_api_wrapper",
-    version="0.0.1",
+    version="0.0.2",
     description="CLI for Querido Diário API",
     url="http://github.com/rennerocha/querido-diario-api-wrapper",
     author="Renne Rocha",
