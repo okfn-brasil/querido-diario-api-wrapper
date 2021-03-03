@@ -2,9 +2,37 @@
 Querido Diário API Wrapper
 ==========================
 
+*****
+Sobre
+*****
+
+O `Querido Diário <https://queridodiario.ok.org.br/>`_ é um projeto de código aberto
+da `Open Knowledge Brasil <https://www.ok.org.br/>`_ que tem como objetivo libertar e 
+centralizar as informações publicadas nos diários oficiais dos municípios, hoje presas 
+em PDFs obscuros de acesso complicado.
+
+Diariamente estamos `coletando os diários <https://github.com/okfn-brasil/querido-diario>`_ 
+e `processando seu conteúdo <https://github.com/okfn-brasil/querido-diario-toolbox>`_ para
+obter o conteúdo de texto desses diários. O resultado desse processamento está disponível em
+uma `API <https://github.com/okfn-brasil/querido-diario-api>`_.
+
+Algumas buscas que são possíveis de se fazer nesse momento:
+- Obter os Diários Oficiais de um município dentro de um período determinado de tempo e retornar o link para seus arquivos PDFs. Por exemplo, podemos buscar todos os Diários Oficiais de Natal-RN no período de 01/01/2012 até 31/01/2021;
+- Obter todos os Diários Oficiais que contenham determinadas palavras-chave. Por exemplo podemos buscar todos os Diários Oficiais de Natal-RN que contenham as palavras "COVID" e "hidroxicloroquina" em toda história ou em determinado período de tempo.
+
+A busca por palavra-chave ainda é limitada e ainda não conseguimos isolar partes dos Diários. 
+Então a busca por palavras muito genéricas pode retornar uma quantidade de resultados muito grande.
+Por exemplo, se procurarmos por "prefeito", é bem provável que todos os Diários contenham essa
+palavra.
+
+Este projeto fornece uma maneira mais simples de se acessar essa API e fazer consultas a ela. Conforme
+a API evoluir, esse projeto também será atualizado. Para sugestões de melhorias, erros, tipos de consultas que seriam interessantes de se adicionar, abrama uma Issue para que possa ser avaliado.
+
 *******
 Install
 *******
+
+(aaa)[http://google.com]
 
 .. code-block:: shell
 
