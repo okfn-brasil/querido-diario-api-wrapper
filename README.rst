@@ -32,8 +32,6 @@ a API evoluir, esse projeto também será atualizado. Para sugestões de melhori
 Install
 *******
 
-(aaa)[http://google.com]
-
 .. code-block:: shell
 
    pip install querido-diario-api-wrapper
