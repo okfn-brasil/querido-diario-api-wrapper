@@ -17,7 +17,9 @@ obter o conteúdo de texto desses diários. O resultado desse processamento est�
 uma `API <https://github.com/okfn-brasil/querido-diario-api>`_.
 
 Algumas buscas que são possíveis de se fazer nesse momento:
+
 - Obter os Diários Oficiais de um município dentro de um período determinado de tempo e retornar o link para seus arquivos PDFs. Por exemplo, podemos buscar todos os Diários Oficiais de Natal-RN no período de 01/01/2012 até 31/01/2021;
+
 - Obter todos os Diários Oficiais que contenham determinadas palavras-chave. Por exemplo podemos buscar todos os Diários Oficiais de Natal-RN que contenham as palavras "COVID" e "hidroxicloroquina" em toda história ou em determinado período de tempo.
 
 A busca por palavra-chave ainda é limitada e ainda não conseguimos isolar partes dos Diários. 
@@ -26,7 +28,7 @@ Por exemplo, se procurarmos por "prefeito", é bem provável que todos os Diári
 palavra.
 
 Este projeto fornece uma maneira mais simples de se acessar essa API e fazer consultas a ela. Conforme
-a API evoluir, esse projeto também será atualizado. Para sugestões de melhorias, erros, tipos de consultas que seriam interessantes de se adicionar, abrama uma Issue para que possa ser avaliado.
+a API evoluir, esse projeto também será atualizado. Para sugestões de melhorias, erros, tipos de consultas que seriam interessantes de se adicionar, abra uma Issue para que possa ser avaliado.
 
 *******
 Install
