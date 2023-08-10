@@ -1,8 +1,5 @@
 import requests
 
-__version__ = "0.0.1"
-
-
 BASE_API_URL = "https://queridodiario.ok.org.br/api/"
 
 
