@@ -3,14 +3,20 @@ import requests
 
 BASE_API_URL = "https://queridodiario.ok.org.br/api/"
 
+# endpoints (EPs)
+EP_GAZETTES = "gazettes"
 
-# TODO: verificar se segue funcionando
+RESPONSE_GAZETTE_KEY = "gazettes"
+RESPONSE_TOTAL_GAZETTES_KEY = "total_gazettes"
+
+
+# TODO: verificar se segue funcionando gazettes()
 # TODO: criar testes unitários
 
 def gazettes(
-    since=None, until=None, keywords=None, territory_id=None, offset=0, size=10
+    since=None, until=None, keywords=None, territory_ids=None, offset=0, size=10
 ):
-    endpoint = "gazettes/"
+    endpoint = "gazettes"
     if territory_id is not None:
         endpoint = f"gazettes/{territory_id}"
 
@@ -87,5 +93,33 @@ def oldest_edition(territory_id):
 
 def publication_frequency(territory_id):
     recent_editions = _limit_edition(territory_id, "descending_date", 10)
+    # calcula o delta de cada intervalo dessas 10 edições
+    # calcula média
     pass
 
+def gazette_date_validation(territory_id, published_date):
+    '''
+    '''
+    payload = [
+        f"territory_ids={territory_id}",
+        f"published_since={published_date}",
+        f"published_until={published_date}",
+        "number_of_excerpts=1"
+    ]
+    url_params = "&".join(payload)
+    response = requests.get(f"{BASE_API_URL}{EP_GAZETTES}?{url_params}")
+    response.raise_for_status()
+
+    if response.json()[RESPONSE_TOTAL_GAZETTES_KEY] > 0:
+        return True #, response.json()[RESPONSE_GAZETTE_KEY]
+    return False #, response.json()[RESPONSE_GAZETTE_KEY]
+    
+def _get_from_item():
+    pass
+
+def get_edition_number(itens):
+    ''' (list) -> list
+    '''
+    return [item["edition"] for item in itens]
+
+    
