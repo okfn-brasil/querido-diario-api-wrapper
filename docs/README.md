@@ -33,7 +33,7 @@ Agradecemos por considerar contribuir com o Querido Diário! :tada:
 
 Você encontra como fazê-lo no [CONTRIBUTING.md](https://github.com/okfn-brasil/querido-diario-api-wrapper/blob/main/docs/CONTRIBUTING.md)!
 
-Além disso, consulte a [documentação do Querido Diário](https://docs.queridodiario.ok.org.br/pt/latest/index.html) para te ajudar. 
+Além disso, consulte a [documentação do Querido Diário](https://docs.queridodiario.ok.org.br/pt-br/latest/) para te ajudar. 
 
 # Como executar
 Para utilizar a biblioteca `querido_diario` é necessário ter [Python](https://docs.python.org/3.8/) (3.8+) instalado.
