@@ -1,0 +1,1545 @@
+{
+    "openapi": "3.0.2",
+    "info": {
+        "title": "Querido Diário",
+        "description": "API to access the gazettes from all Brazilian cities",
+        "version": "0.17.1"
+    },
+    "servers": [
+        {
+            "url": "https://queridodiario.ok.org.br/api"
+        }
+    ],
+    "paths": {
+        "/gazettes": {
+            "get": {
+                "summary": "Search For Content In Gazettes",
+                "description": "Search for content in published gazettes from available cities. Each search result is an individual gazette.",
+                "operationId": "Search_for_content_in_gazettes_gazettes_get",
+                "parameters": [
+                    {
+                        "description": "Search in gazettes published by cities with the given 7-digit IBGE IDs (an empty field searches in all available cities).",
+                        "required": false,
+                        "schema": {
+                            "title": "Territory Ids",
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "description": "Search in gazettes published by cities with the given 7-digit IBGE IDs (an empty field searches in all available cities).",
+                            "default": []
+                        },
+                        "name": "territory_ids",
+                        "in": "query"
+                    },
+                    {
+                        "description": "Search in gazettes published on given date or after (format: YYYY-MM-DD).",
+                        "required": false,
+                        "schema": {
+                            "title": "Published Since",
+                            "type": "string",
+                            "description": "Search in gazettes published on given date or after (format: YYYY-MM-DD).",
+                            "format": "date"
+                        },
+                        "name": "published_since",
+                        "in": "query"
+                    },
+                    {
+                        "description": "Search in gazettes published on given date or before (format: YYYY-MM-DD).",
+                        "required": false,
+                        "schema": {
+                            "title": "Published Until",
+                            "type": "string",
+                            "description": "Search in gazettes published on given date or before (format: YYYY-MM-DD).",
+                            "format": "date"
+                        },
+                        "name": "published_until",
+                        "in": "query"
+                    },
+                    {
+                        "description": "Search in gazettes scraped on given datetime or after (format: YYYY-MM-DDTHH:MM:SS).",
+                        "required": false,
+                        "schema": {
+                            "title": "Scraped Since",
+                            "type": "string",
+                            "description": "Search in gazettes scraped on given datetime or after (format: YYYY-MM-DDTHH:MM:SS).",
+                            "format": "date-time"
+                        },
+                        "name": "scraped_since",
+                        "in": "query"
+                    },
+                    {
+                        "description": "Search in gazettes scraped on given datetime or before (format: YYYY-MM-DDTHH:MM:SS).",
+                        "required": false,
+                        "schema": {
+                            "title": "Scraped Until",
+                            "type": "string",
+                            "description": "Search in gazettes scraped on given datetime or before (format: YYYY-MM-DDTHH:MM:SS).",
+                            "format": "date-time"
+                        },
+                        "name": "scraped_until",
+                        "in": "query"
+                    },
+                    {
+                        "description": "Search in gazettes using OpenSearch's \"simple query string syntax\" (an empty field returns no excerpts, only the results metadata).",
+                        "required": false,
+                        "schema": {
+                            "title": "Querystring",
+                            "type": "string",
+                            "description": "Search in gazettes using OpenSearch's \"simple query string syntax\" (an empty field returns no excerpts, only the results metadata).",
+                            "default": ""
+                        },
+                        "name": "querystring",
+                        "in": "query"
+                    },
+                    {
+                        "description": "Maximum number of characters that an excerpt should display (use with caution).",
+                        "required": false,
+                        "schema": {
+                            "title": "Excerpt Size",
+                            "type": "integer",
+                            "description": "Maximum number of characters that an excerpt should display (use with caution).",
+                            "default": 500
+                        },
+                        "name": "excerpt_size",
+                        "in": "query"
+                    },
+                    {
+                        "description": "Maximum number of excerpts of a gazette to be returned (use with caution).",
+                        "required": false,
+                        "schema": {
+                            "title": "Number Of Excerpts",
+                            "type": "integer",
+                            "description": "Maximum number of excerpts of a gazette to be returned (use with caution).",
+                            "default": 1
+                        },
+                        "name": "number_of_excerpts",
+                        "in": "query"
+                    },
+                    {
+                        "description": "List of strings (usually HTML tags) to be inserted before the text which matches the query in the excerpts.",
+                        "required": false,
+                        "schema": {
+                            "title": "Pre Tags",
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "description": "List of strings (usually HTML tags) to be inserted before the text which matches the query in the excerpts.",
+                            "default": [
+                                ""
+                            ]
+                        },
+                        "name": "pre_tags",
+                        "in": "query"
+                    },
+                    {
+                        "description": "List of strings (usually HTML tags) to be inserted after the text which matches the query in the excerpts.",
+                        "required": false,
+                        "schema": {
+                            "title": "Post Tags",
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "description": "List of strings (usually HTML tags) to be inserted after the text which matches the query in the excerpts.",
+                            "default": [
+                                ""
+                            ]
+                        },
+                        "name": "post_tags",
+                        "in": "query"
+                    },
+                    {
+                        "description": "Maximum number of results to be returned in the response (use with caution).",
+                        "required": false,
+                        "schema": {
+                            "title": "Size",
+                            "type": "integer",
+                            "description": "Maximum number of results to be returned in the response (use with caution).",
+                            "default": 10
+                        },
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "description": "Number of search results to be skipped in the response.",
+                        "required": false,
+                        "schema": {
+                            "title": "Offset",
+                            "type": "integer",
+                            "description": "Number of search results to be skipped in the response.",
+                            "default": 0
+                        },
+                        "name": "offset",
+                        "in": "query"
+                    },
+                    {
+                        "description": "How to sort the search results.",
+                        "required": false,
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/schemas/SortBy"
+                                }
+                            ],
+                            "description": "How to sort the search results.",
+                            "default": "relevance"
+                        },
+                        "name": "sort_by",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GazetteSearchResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/gazettes/by_theme/{theme}": {
+            "get": {
+                "summary": "Search For Content In Gazette Excerpts Associated With A Theme",
+                "description": "Search for content in excerpts from available cities that are related to an available theme. Each search result is an excerpt from a gazette.",
+                "operationId": "Search_for_content_in_gazette_excerpts_associated_with_a_theme_gazettes_by_theme__theme__get",
+                "parameters": [
+                    {
+                        "description": "Search in excerpts from gazettes that are associated to the given theme.",
+                        "required": true,
+                        "schema": {
+                            "title": "Theme",
+                            "type": "string",
+                            "description": "Search in excerpts from gazettes that are associated to the given theme."
+                        },
+                        "name": "theme",
+                        "in": "path"
+                    },
+                    {
+                        "description": "Search in excerpts which contains any of the given entities (entities are theme-specific).",
+                        "required": false,
+                        "schema": {
+                            "title": "Entities",
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "description": "Search in excerpts which contains any of the given entities (entities are theme-specific).",
+                            "default": []
+                        },
+                        "name": "entities",
+                        "in": "query"
+                    },
+                    {
+                        "description": "Search in excerpts which contains any of the given subthemes (subthemes are theme-specific).",
+                        "required": false,
+                        "schema": {
+                            "title": "Subthemes",
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "description": "Search in excerpts which contains any of the given subthemes (subthemes are theme-specific).",
+                            "default": []
+                        },
+                        "name": "subthemes",
+                        "in": "query"
+                    },
+                    {
+                        "description": "Search in excerpts from gazettes published by cities with the given 7-digit IBGE IDs (an empty field searches in all available cities).",
+                        "required": false,
+                        "schema": {
+                            "title": "Territory Ids",
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "description": "Search in excerpts from gazettes published by cities with the given 7-digit IBGE IDs (an empty field searches in all available cities).",
+                            "default": []
+                        },
+                        "name": "territory_ids",
+                        "in": "query"
+                    },
+                    {
+                        "description": "Search in excerpts from gazettes published on given date or after (format: YYYY-MM-DD).",
+                        "required": false,
+                        "schema": {
+                            "title": "Published Since",
+                            "type": "string",
+                            "description": "Search in excerpts from gazettes published on given date or after (format: YYYY-MM-DD).",
+                            "format": "date"
+                        },
+                        "name": "published_since",
+                        "in": "query"
+                    },
+                    {
+                        "description": "Search in excerpts from gazettes published on given date or before (format: YYYY-MM-DD).",
+                        "required": false,
+                        "schema": {
+                            "title": "Published Until",
+                            "type": "string",
+                            "description": "Search in excerpts from gazettes published on given date or before (format: YYYY-MM-DD).",
+                            "format": "date"
+                        },
+                        "name": "published_until",
+                        "in": "query"
+                    },
+                    {
+                        "description": "Search in excerpts from gazettes scraped on given datetime or after (format: YYYY-MM-DDTHH:MM:SS).",
+                        "required": false,
+                        "schema": {
+                            "title": "Scraped Since",
+                            "type": "string",
+                            "description": "Search in excerpts from gazettes scraped on given datetime or after (format: YYYY-MM-DDTHH:MM:SS).",
+                            "format": "date-time"
+                        },
+                        "name": "scraped_since",
+                        "in": "query"
+                    },
+                    {
+                        "description": "Search in excerpts from gazettes scraped on given datetime or before (format: YYYY-MM-DDTHH:MM:SS).",
+                        "required": false,
+                        "schema": {
+                            "title": "Scraped Until",
+                            "type": "string",
+                            "description": "Search in excerpts from gazettes scraped on given datetime or before (format: YYYY-MM-DDTHH:MM:SS).",
+                            "format": "date-time"
+                        },
+                        "name": "scraped_until",
+                        "in": "query"
+                    },
+                    {
+                        "description": "Search in excerpts using OpenSearch's \"simple query string syntax\".",
+                        "required": false,
+                        "schema": {
+                            "title": "Querystring",
+                            "type": "string",
+                            "description": "Search in excerpts using OpenSearch's \"simple query string syntax\".",
+                            "default": ""
+                        },
+                        "name": "querystring",
+                        "in": "query"
+                    },
+                    {
+                        "description": "List of strings (usually HTML tags) to be inserted before the text which matches the query in the excerpts.",
+                        "required": false,
+                        "schema": {
+                            "title": "Pre Tags",
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "description": "List of strings (usually HTML tags) to be inserted before the text which matches the query in the excerpts.",
+                            "default": [
+                                ""
+                            ]
+                        },
+                        "name": "pre_tags",
+                        "in": "query"
+                    },
+                    {
+                        "description": "List of strings (usually HTML tags) to be inserted after the text which matches the query in the excerpts.",
+                        "required": false,
+                        "schema": {
+                            "title": "Post Tags",
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "description": "List of strings (usually HTML tags) to be inserted after the text which matches the query in the excerpts.",
+                            "default": [
+                                ""
+                            ]
+                        },
+                        "name": "post_tags",
+                        "in": "query"
+                    },
+                    {
+                        "description": "Maximum number of results to be returned in the response (use with caution).",
+                        "required": false,
+                        "schema": {
+                            "title": "Size",
+                            "type": "integer",
+                            "description": "Maximum number of results to be returned in the response (use with caution).",
+                            "default": 10
+                        },
+                        "name": "size",
+                        "in": "query"
+                    },
+                    {
+                        "description": "Number of search results to be skipped in the response.",
+                        "required": false,
+                        "schema": {
+                            "title": "Offset",
+                            "type": "integer",
+                            "description": "Number of search results to be skipped in the response.",
+                            "default": 0
+                        },
+                        "name": "offset",
+                        "in": "query"
+                    },
+                    {
+                        "description": "How to sort the search results.",
+                        "required": false,
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/schemas/SortBy"
+                                }
+                            ],
+                            "description": "How to sort the search results.",
+                            "default": "relevance"
+                        },
+                        "name": "sort_by",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ThemedExcerptSearchResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Theme not found.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPExceptionMessage"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/gazettes/by_theme/themes/": {
+            "get": {
+                "summary": "Get All Available Themes",
+                "description": "Get all available themes that can be used to search in gazettes by theme.",
+                "operationId": "Get_all_available_themes_gazettes_by_theme_themes__get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ThemesSearchResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/gazettes/by_theme/subthemes/{theme}": {
+            "get": {
+                "summary": "Get All Available Subthemes Of A Theme",
+                "description": "Get all available subthemes of a theme that can be used to search in gazettes by theme and further filtering by subthemes.",
+                "operationId": "Get_all_available_subthemes_of_a_theme_gazettes_by_theme_subthemes__theme__get",
+                "parameters": [
+                    {
+                        "description": "Theme that can be used to search in gazettes by theme.",
+                        "required": true,
+                        "schema": {
+                            "title": "Theme",
+                            "type": "string",
+                            "description": "Theme that can be used to search in gazettes by theme."
+                        },
+                        "name": "theme",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SubthemesSearchResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Theme not found.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPExceptionMessage"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/gazettes/by_theme/entities/{theme}": {
+            "get": {
+                "summary": "Get All Available Entities Of A Theme",
+                "description": "Get all available entities of a theme that can be used to search in gazettes by theme and further filtering by entities.",
+                "operationId": "Get_all_available_entities_of_a_theme_gazettes_by_theme_entities__theme__get",
+                "parameters": [
+                    {
+                        "description": "Theme that can be used to search in gazettes by theme.",
+                        "required": true,
+                        "schema": {
+                            "title": "Theme",
+                            "type": "string",
+                            "description": "Theme that can be used to search in gazettes by theme."
+                        },
+                        "name": "theme",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/EntitiesSearchResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Theme not found.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPExceptionMessage"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/cities": {
+            "get": {
+                "summary": "Search For Cities By Name.",
+                "description": "Search for cities with a name similar to the city_name query.",
+                "operationId": "Search_for_cities_by_name__cities_get",
+                "parameters": [
+                    {
+                        "description": "Search for cities with a similar name (empty field returns all cities).",
+                        "required": false,
+                        "schema": {
+                            "title": "City Name",
+                            "type": "string",
+                            "description": "Search for cities with a similar name (empty field returns all cities).",
+                            "default": ""
+                        },
+                        "name": "city_name",
+                        "in": "query"
+                    },
+                    {
+                        "description": "Search for cities within the same openness level (empty field returns from all levels)",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/components/schemas/CityLevel"
+                            },
+                            "description": "Search for cities within the same openness level (empty field returns from all levels)",
+                            "default": [
+                                ""
+                            ]
+                        },
+                        "name": "levels",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CitiesSearchResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/cities/{territory_id}": {
+            "get": {
+                "summary": "Get City By Ibge Id",
+                "description": "Get general info from specific city with 7-digit IBGE ID.",
+                "operationId": "Get_city_by_IBGE_ID_cities__territory_id__get",
+                "parameters": [
+                    {
+                        "description": "City's 7-digit IBGE ID.",
+                        "required": true,
+                        "schema": {
+                            "title": "Territory Id",
+                            "type": "string",
+                            "description": "City's 7-digit IBGE ID."
+                        },
+                        "name": "territory_id",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CitySearchResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "City not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPExceptionMessage"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/suggestions": {
+            "post": {
+                "summary": "Send A Suggestion",
+                "description": "Send a suggestion to the project",
+                "operationId": "Send_a_suggestion_suggestions_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateSuggestionBody"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CreatedSuggestionResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/company/info/{cnpj}": {
+            "get": {
+                "summary": "Get Company Info By Cnpj Number",
+                "description": "Get info from specific company by its CNPJ number.",
+                "operationId": "Get_company_info_by_CNPJ_number_company_info__cnpj__get",
+                "parameters": [
+                    {
+                        "description": "Company's CNPJ number (may include non-digit characters).",
+                        "required": true,
+                        "schema": {
+                            "title": "Cnpj",
+                            "type": "string",
+                            "description": "Company's CNPJ number (may include non-digit characters)."
+                        },
+                        "name": "cnpj",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CompanySearchResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Company not found.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPExceptionMessage"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "CNPJ is not valid.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPExceptionMessage"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/company/partners/{cnpj}": {
+            "get": {
+                "summary": "Get Company Partners Infos By Cnpj Number",
+                "description": "Get info of partners of a company by its CNPJ number.",
+                "operationId": "Get_company_partners_infos_by_CNPJ_number_company_partners__cnpj__get",
+                "parameters": [
+                    {
+                        "description": "Company's CNPJ number (may include non-digit characters).",
+                        "required": true,
+                        "schema": {
+                            "title": "Cnpj",
+                            "type": "string",
+                            "description": "Company's CNPJ number (may include non-digit characters)."
+                        },
+                        "name": "cnpj",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PartnersSearchResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "CNPJ is not valid.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPExceptionMessage"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "CitiesSearchResponse": {
+                "title": "CitiesSearchResponse",
+                "required": [
+                    "cities"
+                ],
+                "type": "object",
+                "properties": {
+                    "cities": {
+                        "title": "Cities",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/City"
+                        }
+                    }
+                }
+            },
+            "City": {
+                "title": "City",
+                "required": [
+                    "territory_id",
+                    "territory_name",
+                    "state_code",
+                    "level"
+                ],
+                "type": "object",
+                "properties": {
+                    "territory_id": {
+                        "title": "Territory Id",
+                        "type": "string"
+                    },
+                    "territory_name": {
+                        "title": "Territory Name",
+                        "type": "string"
+                    },
+                    "state_code": {
+                        "title": "State Code",
+                        "type": "string"
+                    },
+                    "publication_urls": {
+                        "title": "Publication Urls",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "level": {
+                        "$ref": "#/components/schemas/CityLevel"
+                    }
+                }
+            },
+            "CityLevel": {
+                "title": "CityLevel",
+                "enum": [
+                    "",
+                    "0",
+                    "1",
+                    "2",
+                    "3"
+                ],
+                "type": "string",
+                "description": "An enumeration."
+            },
+            "CitySearchResponse": {
+                "title": "CitySearchResponse",
+                "required": [
+                    "city"
+                ],
+                "type": "object",
+                "properties": {
+                    "city": {
+                        "$ref": "#/components/schemas/City"
+                    }
+                }
+            },
+            "Company": {
+                "title": "Company",
+                "required": [
+                    "cnpj_basico",
+                    "cnpj_ordem",
+                    "cnpj_dv",
+                    "cnpj_completo",
+                    "cnpj_completo_apenas_numeros"
+                ],
+                "type": "object",
+                "properties": {
+                    "cnpj_basico": {
+                        "title": "Cnpj Basico",
+                        "type": "string"
+                    },
+                    "cnpj_ordem": {
+                        "title": "Cnpj Ordem",
+                        "type": "string"
+                    },
+                    "cnpj_dv": {
+                        "title": "Cnpj Dv",
+                        "type": "string"
+                    },
+                    "cnpj_completo": {
+                        "title": "Cnpj Completo",
+                        "type": "string"
+                    },
+                    "cnpj_completo_apenas_numeros": {
+                        "title": "Cnpj Completo Apenas Numeros",
+                        "type": "string"
+                    },
+                    "identificador_matriz_filial": {
+                        "title": "Identificador Matriz Filial",
+                        "type": "string"
+                    },
+                    "nome_fantasia": {
+                        "title": "Nome Fantasia",
+                        "type": "string"
+                    },
+                    "situacao_cadastral": {
+                        "title": "Situacao Cadastral",
+                        "type": "string"
+                    },
+                    "data_situacao_cadastral": {
+                        "title": "Data Situacao Cadastral",
+                        "type": "string"
+                    },
+                    "motivo_situacao_cadastral": {
+                        "title": "Motivo Situacao Cadastral",
+                        "type": "string"
+                    },
+                    "nome_cidade_exterior": {
+                        "title": "Nome Cidade Exterior",
+                        "type": "string"
+                    },
+                    "data_inicio_atividade": {
+                        "title": "Data Inicio Atividade",
+                        "type": "string"
+                    },
+                    "cnae_fiscal_secundario": {
+                        "title": "Cnae Fiscal Secundario",
+                        "type": "string"
+                    },
+                    "tipo_logradouro": {
+                        "title": "Tipo Logradouro",
+                        "type": "string"
+                    },
+                    "logradouro": {
+                        "title": "Logradouro",
+                        "type": "string"
+                    },
+                    "numero": {
+                        "title": "Numero",
+                        "type": "string"
+                    },
+                    "complemento": {
+                        "title": "Complemento",
+                        "type": "string"
+                    },
+                    "bairro": {
+                        "title": "Bairro",
+                        "type": "string"
+                    },
+                    "cep": {
+                        "title": "Cep",
+                        "type": "string"
+                    },
+                    "uf": {
+                        "title": "Uf",
+                        "type": "string"
+                    },
+                    "ddd_telefone_1": {
+                        "title": "Ddd Telefone 1",
+                        "type": "string"
+                    },
+                    "ddd_telefone_2": {
+                        "title": "Ddd Telefone 2",
+                        "type": "string"
+                    },
+                    "ddd_telefone_fax": {
+                        "title": "Ddd Telefone Fax",
+                        "type": "string"
+                    },
+                    "correio_eletronico": {
+                        "title": "Correio Eletronico",
+                        "type": "string"
+                    },
+                    "situacao_especial": {
+                        "title": "Situacao Especial",
+                        "type": "string"
+                    },
+                    "data_situacao_especial": {
+                        "title": "Data Situacao Especial",
+                        "type": "string"
+                    },
+                    "pais": {
+                        "title": "Pais",
+                        "type": "string"
+                    },
+                    "municipio": {
+                        "title": "Municipio",
+                        "type": "string"
+                    },
+                    "razao_social": {
+                        "title": "Razao Social",
+                        "type": "string"
+                    },
+                    "natureza_juridica": {
+                        "title": "Natureza Juridica",
+                        "type": "string"
+                    },
+                    "qualificacao_do_responsavel": {
+                        "title": "Qualificacao Do Responsavel",
+                        "type": "string"
+                    },
+                    "capital_social": {
+                        "title": "Capital Social",
+                        "type": "string"
+                    },
+                    "porte": {
+                        "title": "Porte",
+                        "type": "string"
+                    },
+                    "ente_federativo_responsavel": {
+                        "title": "Ente Federativo Responsavel",
+                        "type": "string"
+                    },
+                    "opcao_pelo_simples": {
+                        "title": "Opcao Pelo Simples",
+                        "type": "string"
+                    },
+                    "data_opcao_pelo_simples": {
+                        "title": "Data Opcao Pelo Simples",
+                        "type": "string"
+                    },
+                    "data_exclusao_pelo_simples": {
+                        "title": "Data Exclusao Pelo Simples",
+                        "type": "string"
+                    },
+                    "opcao_pelo_mei": {
+                        "title": "Opcao Pelo Mei",
+                        "type": "string"
+                    },
+                    "data_opcao_pelo_mei": {
+                        "title": "Data Opcao Pelo Mei",
+                        "type": "string"
+                    },
+                    "data_exclusao_pelo_mei": {
+                        "title": "Data Exclusao Pelo Mei",
+                        "type": "string"
+                    },
+                    "cnae": {
+                        "title": "Cnae",
+                        "type": "string"
+                    }
+                }
+            },
+            "CompanySearchResponse": {
+                "title": "CompanySearchResponse",
+                "required": [
+                    "cnpj_info"
+                ],
+                "type": "object",
+                "properties": {
+                    "cnpj_info": {
+                        "$ref": "#/components/schemas/Company"
+                    }
+                }
+            },
+            "CreateSuggestionBody": {
+                "title": "CreateSuggestionBody",
+                "required": [
+                    "email_address",
+                    "name",
+                    "content"
+                ],
+                "type": "object",
+                "properties": {
+                    "email_address": {
+                        "title": "Email address",
+                        "type": "string",
+                        "description": "Email address who is sending email"
+                    },
+                    "name": {
+                        "title": "Name",
+                        "type": "string",
+                        "description": "Name who is sending email"
+                    },
+                    "content": {
+                        "title": "Email content",
+                        "type": "string",
+                        "description": "Email content with suggestion"
+                    }
+                }
+            },
+            "CreatedSuggestionResponse": {
+                "title": "CreatedSuggestionResponse",
+                "required": [
+                    "status"
+                ],
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "title": "Status",
+                        "type": "string"
+                    }
+                }
+            },
+            "EntitiesSearchResponse": {
+                "title": "EntitiesSearchResponse",
+                "required": [
+                    "entities"
+                ],
+                "type": "object",
+                "properties": {
+                    "entities": {
+                        "title": "Entities",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Entity"
+                        }
+                    }
+                }
+            },
+            "Entity": {
+                "title": "Entity",
+                "required": [
+                    "entity_type",
+                    "entity_type_description",
+                    "entities"
+                ],
+                "type": "object",
+                "properties": {
+                    "entity_type": {
+                        "title": "Entity Type",
+                        "type": "string"
+                    },
+                    "entity_type_description": {
+                        "title": "Entity Type Description",
+                        "type": "string"
+                    },
+                    "entities": {
+                        "title": "Entities",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "GazetteItem": {
+                "title": "GazetteItem",
+                "required": [
+                    "territory_id",
+                    "date",
+                    "scraped_at",
+                    "url",
+                    "territory_name",
+                    "state_code",
+                    "excerpts"
+                ],
+                "type": "object",
+                "properties": {
+                    "territory_id": {
+                        "title": "Territory Id",
+                        "type": "string"
+                    },
+                    "date": {
+                        "title": "Date",
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "scraped_at": {
+                        "title": "Scraped At",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "url": {
+                        "title": "Url",
+                        "type": "string"
+                    },
+                    "territory_name": {
+                        "title": "Territory Name",
+                        "type": "string"
+                    },
+                    "state_code": {
+                        "title": "State Code",
+                        "type": "string"
+                    },
+                    "excerpts": {
+                        "title": "Excerpts",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "edition": {
+                        "title": "Edition",
+                        "type": "string"
+                    },
+                    "is_extra_edition": {
+                        "title": "Is Extra Edition",
+                        "type": "boolean"
+                    },
+                    "txt_url": {
+                        "title": "Txt Url",
+                        "type": "string"
+                    }
+                }
+            },
+            "GazetteSearchResponse": {
+                "title": "GazetteSearchResponse",
+                "required": [
+                    "total_gazettes",
+                    "gazettes"
+                ],
+                "type": "object",
+                "properties": {
+                    "total_gazettes": {
+                        "title": "Total Gazettes",
+                        "type": "integer"
+                    },
+                    "gazettes": {
+                        "title": "Gazettes",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/GazetteItem"
+                        }
+                    }
+                }
+            },
+            "HTTPExceptionMessage": {
+                "title": "HTTPExceptionMessage",
+                "required": [
+                    "detail"
+                ],
+                "type": "object",
+                "properties": {
+                    "detail": {
+                        "title": "Detail",
+                        "type": "string"
+                    }
+                }
+            },
+            "HTTPValidationError": {
+                "title": "HTTPValidationError",
+                "type": "object",
+                "properties": {
+                    "detail": {
+                        "title": "Detail",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ValidationError"
+                        }
+                    }
+                }
+            },
+            "Partner": {
+                "title": "Partner",
+                "required": [
+                    "cnpj_basico",
+                    "cnpj_ordem",
+                    "cnpj_dv",
+                    "cnpj_completo",
+                    "cnpj_completo_apenas_numeros"
+                ],
+                "type": "object",
+                "properties": {
+                    "cnpj_basico": {
+                        "title": "Cnpj Basico",
+                        "type": "string"
+                    },
+                    "cnpj_ordem": {
+                        "title": "Cnpj Ordem",
+                        "type": "string"
+                    },
+                    "cnpj_dv": {
+                        "title": "Cnpj Dv",
+                        "type": "string"
+                    },
+                    "cnpj_completo": {
+                        "title": "Cnpj Completo",
+                        "type": "string"
+                    },
+                    "cnpj_completo_apenas_numeros": {
+                        "title": "Cnpj Completo Apenas Numeros",
+                        "type": "string"
+                    },
+                    "identificador_socio": {
+                        "title": "Identificador Socio",
+                        "type": "string"
+                    },
+                    "razao_social": {
+                        "title": "Razao Social",
+                        "type": "string"
+                    },
+                    "cnpj_cpf_socio": {
+                        "title": "Cnpj Cpf Socio",
+                        "type": "string"
+                    },
+                    "qualificacao_socio": {
+                        "title": "Qualificacao Socio",
+                        "type": "string"
+                    },
+                    "data_entrada_sociedade": {
+                        "title": "Data Entrada Sociedade",
+                        "type": "string"
+                    },
+                    "pais_socio_estrangeiro": {
+                        "title": "Pais Socio Estrangeiro",
+                        "type": "string"
+                    },
+                    "numero_cpf_representante_legal": {
+                        "title": "Numero Cpf Representante Legal",
+                        "type": "string"
+                    },
+                    "nome_representante_legal": {
+                        "title": "Nome Representante Legal",
+                        "type": "string"
+                    },
+                    "qualificacao_representante_legal": {
+                        "title": "Qualificacao Representante Legal",
+                        "type": "string"
+                    },
+                    "faixa_etaria": {
+                        "title": "Faixa Etaria",
+                        "type": "string"
+                    }
+                }
+            },
+            "PartnersSearchResponse": {
+                "title": "PartnersSearchResponse",
+                "required": [
+                    "total_partners",
+                    "partners"
+                ],
+                "type": "object",
+                "properties": {
+                    "total_partners": {
+                        "title": "Total Partners",
+                        "type": "integer"
+                    },
+                    "partners": {
+                        "title": "Partners",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Partner"
+                        }
+                    }
+                }
+            },
+            "SortBy": {
+                "title": "SortBy",
+                "enum": [
+                    "relevance",
+                    "descending_date",
+                    "ascending_date"
+                ],
+                "type": "string",
+                "description": "An enumeration."
+            },
+            "SubthemesSearchResponse": {
+                "title": "SubthemesSearchResponse",
+                "required": [
+                    "subthemes"
+                ],
+                "type": "object",
+                "properties": {
+                    "subthemes": {
+                        "title": "Subthemes",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "ThemedExcerptItem": {
+                "title": "ThemedExcerptItem",
+                "required": [
+                    "territory_id",
+                    "date",
+                    "scraped_at",
+                    "url",
+                    "territory_name",
+                    "state_code",
+                    "excerpt",
+                    "subthemes"
+                ],
+                "type": "object",
+                "properties": {
+                    "territory_id": {
+                        "title": "Territory Id",
+                        "type": "string"
+                    },
+                    "date": {
+                        "title": "Date",
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "scraped_at": {
+                        "title": "Scraped At",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "url": {
+                        "title": "Url",
+                        "type": "string"
+                    },
+                    "territory_name": {
+                        "title": "Territory Name",
+                        "type": "string"
+                    },
+                    "state_code": {
+                        "title": "State Code",
+                        "type": "string"
+                    },
+                    "excerpt": {
+                        "title": "Excerpt",
+                        "type": "string"
+                    },
+                    "subthemes": {
+                        "title": "Subthemes",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "entities": {
+                        "title": "Entities",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "edition": {
+                        "title": "Edition",
+                        "type": "string"
+                    },
+                    "is_extra_edition": {
+                        "title": "Is Extra Edition",
+                        "type": "boolean"
+                    },
+                    "txt_url": {
+                        "title": "Txt Url",
+                        "type": "string"
+                    }
+                }
+            },
+            "ThemedExcerptSearchResponse": {
+                "title": "ThemedExcerptSearchResponse",
+                "required": [
+                    "total_excerpts",
+                    "excerpts"
+                ],
+                "type": "object",
+                "properties": {
+                    "total_excerpts": {
+                        "title": "Total Excerpts",
+                        "type": "integer"
+                    },
+                    "excerpts": {
+                        "title": "Excerpts",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ThemedExcerptItem"
+                        }
+                    }
+                }
+            },
+            "ThemesSearchResponse": {
+                "title": "ThemesSearchResponse",
+                "required": [
+                    "themes"
+                ],
+                "type": "object",
+                "properties": {
+                    "themes": {
+                        "title": "Themes",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "ValidationError": {
+                "title": "ValidationError",
+                "required": [
+                    "loc",
+                    "msg",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "loc": {
+                        "title": "Location",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "msg": {
+                        "title": "Message",
+                        "type": "string"
+                    },
+                    "type": {
+                        "title": "Error Type",
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}
