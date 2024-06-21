@@ -8,7 +8,7 @@ from setuptools import Command, find_packages, setup
 NAME = "querido-diario-api-wrapper"
 DESCRIPTION = "CLI para a API do Querido Diário"
 URL = "https://github.com/okfn-brasil/querido-diario-api-wrapper"
-EMAIL = "contato@serenata.ai"
+EMAIL = "queridodiario@ok.org.br"
 AUTHOR = "Open Knowledge Brasil"
 REQUIRES_PYTHON = ">=3.8.0"
 

@@ -9,7 +9,7 @@
 </p>
 
 # API wrapper
-Dentro do [ecossistema do Querido Diário](https://github.com/okfn-brasil/querido-diario-comunidade/blob/main/.github/CONTRIBUTING.md#ecossistema-do-querido-di%C3%A1rio), este repositório fornece uma **biblioteca simples para acessar e consultar a [API](https://queridodiario.ok.org.br/api/docs) do projeto**.
+Dentro do [ecossistema do Querido Diário](https://docs.queridodiario.ok.org.br/pt-br/latest/contribuindo/guia-de-contribuicao.html#ecossistema-do-querido-diario), este repositório fornece uma **biblioteca simples para acessar e consultar a [API](https://queridodiario.ok.org.br/api/docs) do projeto**.
 
 Conheça mais sobre as [tecnologias](https://queridodiario.ok.org.br/tecnologia) e a [história](https://queridodiario.ok.org.br/sobre) do projeto no [site do Querido Diário](https://queridodiario.ok.org.br)
 
