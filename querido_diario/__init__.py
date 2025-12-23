@@ -1,6 +1,6 @@
 import requests
 
-BASE_API_URL = "https://queridodiario.ok.org.br/api/"
+BASE_API_URL = "https://api.queridodiario.ok.org.br/"
 
 
 TERRITORIES = [
